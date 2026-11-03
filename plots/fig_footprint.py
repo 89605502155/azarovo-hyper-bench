@@ -1,4 +1,4 @@
-"""Figure 2: cost of importing and installing each library (medians, IQR whiskers)."""
+"""Figure 2: cost of importing and installing each library (medians, IQR whiskers, log axes)."""
 
 from __future__ import annotations
 
@@ -24,13 +24,14 @@ def panel(ax, stats: dict, key: str, title: str) -> None:
     bars = ax.barh(names, med, xerr=[low, high], color=[COLORS[n] for n in names],
                    error_kw={"lw": 0.8, "capsize": 2})  # fmt: skip
     ax.set_title(title, loc="left")
+    ax.set_xscale("log")  # values span two orders of magnitude: small ones stay visible
     ax.grid(axis="y", visible=False)
-    top = max(m + h for m, h in zip(med, high, strict=True))
+    ax.grid(axis="x", which="minor", alpha=0.12)
     for bar, value, h in zip(bars, med, high, strict=True):
         text = f"{value:.1f}".replace(".", ",")
-        ax.text(value + h + top * 0.03, bar.get_y() + bar.get_height() / 2, text,
+        ax.text((value + h) * 1.18, bar.get_y() + bar.get_height() / 2, text,
                 va="center", fontsize=10)  # fmt: skip
-    ax.set_xlim(0, top * 1.32)
+    ax.set_xlim(min(med) * 0.5, max(m + h for m, h in zip(med, high, strict=True)) * 4)
 
 
 def main() -> None:
