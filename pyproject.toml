@@ -1,0 +1,37 @@
+[project]
+name = "azarovo-hyper-bench"
+version = "1.0.0"
+description = "Reproducible benchmarks comparing azarovo-hyper with other Python virtualization libraries"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Andrey Ferubko", email = "ferubko1999@yandex.ru" }]
+dependencies = [
+    "azarovo-hyper==0.0.2",
+    "libvirt-python==12.9.0",
+    "pyvmomi==9.1.1.0",
+    "proxmoxer==2.3.0",
+    "openstacksdk==4.22.0",
+    "pylxd==2.4.2",
+    "python-vagrant==1.0.0",
+    "requests>=2.32",
+    "matplotlib>=3.10",
+    "numpy>=2.2",
+    "pillow>=11",
+]
+
+[dependency-groups]
+dev = ["ruff>=0.17"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF"]
+# figure labels are in Russian: Cyrillic letters in strings are intended
+ignore = ["RUF001", "RUF002", "RUF003"]
